@@ -23,11 +23,13 @@ When launching WebChecker, users are greeted with a popup that introduces the to
   <img src="img/screenshot_popup.png" width=""><br>
 </div>
 
-When a webpage is analyzed, WebChecker displays a panel listing the detected Wasm files, their domain, filename, and a detailed result indicating whether the file is benign or malicious.
+When a webpage is analyzed, users can call up WebChecker's panel, which lists detected Wasm files, their domain, filename, and detailed results indicating whether the file is benign or malicious.
 
 <div align="center">
   <img src="img/screenshot_panel_benign_page.png" width="600"><br>
 </div>
+
+When a malicious Wasm file is detected on a page, the plugin will call a popup window to **warn the user** that the current page is unsafe and to stop accessing the current page.
 
 <div align="center">
   <img src="img/screenshot_panel_malicious_page.png" width="600"><br>
@@ -37,7 +39,7 @@ When a webpage is analyzed, WebChecker displays a panel listing the detected Was
 
 ### 😎Download and Installation
 
-On our Github Release page, you can find the built WebChecker binary file with the suffix **.crx**.
+On our Github [Release page](https://github.com/Q8201/WasmGuard/releases), you can find the built WebChecker binary file with the suffix **.crx**.
 
 To install **.crx** files into the browser, you can use the following methods:
 

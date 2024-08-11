@@ -103,7 +103,7 @@ async function npmBuild(options) {
   const cwdKey = cwd.replace(dir, "");
   const hashCode = hashFolder(cwd);
   if (hashCode === HASH[cwdKey]) {
-    console.log(`${cwdKey}No updates`);
+    console.log(`${cwdKey} no updates`);
     return;
   }
   HASH[cwdKey] = hashCode;

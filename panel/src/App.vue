@@ -154,11 +154,14 @@ export default {
       }
     },
     checkMaliciousFiles() {
+      console.log("Checking for malicious files...");
       let isMalicious = this.tableData.some(item => {
-        return item.res === 1 && item.host === window.location.host;
-      })
+        console.log("Checking item:", item);
+        return item.res >= 0.6 && item.host === window.location.host;
+      });
+      console.log("Is malicious:", isMalicious);
       if (isMalicious) {
-        this.showPanel = true
+        this.showPanel = true;
         this.$message({
           showClose: true,
           message: 'This webpage contains malicious Wasm files. Please stop accessing the current webpage!',
