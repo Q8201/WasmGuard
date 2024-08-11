@@ -26,13 +26,13 @@ When launching WebChecker, users are greeted with a popup that introduces the to
 When a webpage is analyzed, users can call up WebChecker's panel, which lists detected Wasm files, their domain, filename, and detailed results indicating whether the file is benign or malicious.
 
 <div align="center">
-  <img src="img/screenshot_panel_benign_page.png" width="600"><br>
+  <img src="img/screenshot_panel_benign_page.png" width=""><br>
 </div>
 
 When a malicious Wasm file is detected on a page, the plugin will call a popup window to **warn the user** that the current page is unsafe and to stop accessing the current page.
 
 <div align="center">
-  <img src="img/screenshot_panel_malicious_page.png" width="600"><br>
+  <img src="img/screenshot_panel_malicious_page.png" width=""><br>
 </div>
 
 ## 🥳Get Started
