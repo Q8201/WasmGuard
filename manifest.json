@@ -34,8 +34,8 @@
   "web_accessible_resources": [
     {
       "resources": [
-        "panel/dist/js/app.820d20b1.js",
-        "panel/dist/js/chunk-vendors.d24a5da4.js",
+        "panel/dist/js/app.0ad1a673.js",
+        "panel/dist/js/chunk-vendors.aa3dac99.js",
         "script/init.js",
         "script/wrapper.js",
         "panel/dist/fonts/element-icons.f1a45d74.ttf",

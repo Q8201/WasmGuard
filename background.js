@@ -103,7 +103,7 @@ function detect_wasm(host) {
         .finally(() => {
             wasm_map.set(host, []);
         })
-        ;
+    ;
 }
 
 function send_detect_res() {
@@ -117,7 +117,7 @@ function send_detect_res() {
         type: "data_to_show"
     }
     //chrome.runtime.sendMessage(data_send);
-    chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+    chrome.tabs.query({active: true, currentWindow: true}, function (tabs) {
         var activeTab = tabs[0];
         chrome.tabs.sendMessage(activeTab.id, data_send);
     });
@@ -139,6 +139,7 @@ function download_wasm(base64Data, filename) {
         }
     });
 }
+
 // 注意：这里假设数据已经是base64编码的字符串
 
 // 监听注入的消息
@@ -155,7 +156,7 @@ chrome.runtime.onMessage.addListener(async function (message, sender, sendRespon
     // 通信测试
     if (message.greeting === "hello") {
         // 发送响应到content script
-        sendResponse({ farewell: "goodbye" });
+        sendResponse({farewell: "goodbye"});
     }
     if (message.type === "FROM_INJECTED_SCRIPT") {
         console.log("Message from injected script:", message.text);
@@ -205,7 +206,7 @@ chrome.runtime.onMessage.addListener(async function (message, sender, sendRespon
 
     if (message.action === 'closeTab') {
         console.log("快关闭网页！")
-        chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+        chrome.tabs.query({active: true, currentWindow: true}, function (tabs) {
             chrome.tabs.remove(tabs[0].id);
         });
     }

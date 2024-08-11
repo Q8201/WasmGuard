@@ -10,13 +10,13 @@
           </div>
         </div>
         <el-table :data="tableData" border style="width: 100%;background-color:#fff; " height="410">
-          <el-table-column prop="host" label="Url" width="180">
+          <el-table-column prop="host" label="URL" width="180">
           </el-table-column>
-          <el-table-column prop="originalFilename" label="Filename" width="180">
+          <el-table-column prop="originalFilename" label="Wasm Filename" width="180">
           </el-table-column>
           <el-table-column prop="filename" label="SHA-256">
           </el-table-column>
-          <el-table-column prop="res" label="Results" width="100"
+          <el-table-column prop="res" label="Alert" width="100"
             :filters="[{ text: 'benign', value: 0 }, { text: 'malicious', value: 1 }]" :filter-method="filterTag"
             filter-placement="bottom-end">
             <template slot-scope="scope">

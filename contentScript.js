@@ -1,5 +1,5 @@
 
-const scriptUrlList = ["panel/dist/js/app.820d20b1.js","panel/dist/js/chunk-vendors.d24a5da4.js","script/init.js","script/wrapper.js"];
+const scriptUrlList = ["panel/dist/js/app.0ad1a673.js","panel/dist/js/chunk-vendors.aa3dac99.js","script/init.js","script/wrapper.js"];
 scriptUrlList.forEach(url=>{
     const s = document.createElement('script');
     s.src = chrome.runtime.getURL(url);
