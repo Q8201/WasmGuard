@@ -5,13 +5,36 @@ const host_set = new Set(); // 检测有多少个源
 let vue_ready = false;
 // Background Script
 
-// host: 发送这个文件的url
-function wasmFound(data, host) {
-    // 用Web Crypto API 生成哈希作为filename
+// // host: 发送这个文件的url
+// function wasmFound(data, host) {
+//     // 用Web Crypto API 生成哈希作为filename
+//     crypto.subtle.digest('SHA-256', new TextEncoder().encode(data)).then(async (hashBuffer) => {
+//         const hashArray = Array.from(new Uint8Array(hashBuffer));
+//         const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+
+//         if (!wasm_map.has(host)) {
+//             wasm_map.set(host, []);
+//         }
+
+//         if (!host_set.has(host)) {
+//             host_set.add(host)
+//         }
+//         let arr = wasm_map.get(host);
+
+//         let wasm_obj = {
+//             filename: hashHex,
+//             content: data
+//         }
+
+//         arr.push(wasm_obj);
+//     });
+
+// }
+
+function wasmFound(data, host, originalFilename) {
     crypto.subtle.digest('SHA-256', new TextEncoder().encode(data)).then(async (hashBuffer) => {
         const hashArray = Array.from(new Uint8Array(hashBuffer));
         const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
-        const filename = hashHex;
 
         if (!wasm_map.has(host)) {
             wasm_map.set(host, []);
@@ -24,13 +47,12 @@ function wasmFound(data, host) {
 
         let wasm_obj = {
             filename: hashHex,
+            originalFilename: originalFilename, // 保存原始文件名
             content: data
         }
 
         arr.push(wasm_obj);
-
     });
-
 }
 
 function detect_wasm(host) {
@@ -105,7 +127,6 @@ function download_wasm(base64Data, filename) {
     // 创建本地url
     const dataUrl = 'data:application/wasm;base64,' + base64Data;
 
-
     chrome.downloads.download({
         url: dataUrl,
         filename: filename,
@@ -141,18 +162,30 @@ chrome.runtime.onMessage.addListener(async function (message, sender, sendRespon
         // 根据需要处理消息
     }
 
+    // if (message.type === "WASM_FOUND") {
+    //     const data = message.data; // Base64编码的WASM数据
+    //     const host = message.host;
+    //     // 在这里实现wasmFound的逻辑
+    //     try {
+    //         await wasmFound(data, host)
+    //         // 这里应该发生个信息回去
+    //         console.log('存储成功！')
+    //     } catch {
+    //         console.log('失败')
+    //     }
+
+    // }
+
     if (message.type === "WASM_FOUND") {
         const data = message.data; // Base64编码的WASM数据
         const host = message.host;
-        // 在这里实现wasmFound的逻辑
+        const originalFilename = message.originalFilename; // 假设消息中包含原始文件名
         try {
-            await wasmFound(data, host)
-            // 这里应该发生个信息回去
+            await wasmFound(data, host, originalFilename);
             console.log('存储成功！')
         } catch {
             console.log('失败')
         }
-
     }
 
     if (message.type === "WASM_COMPLETE") {
@@ -171,7 +204,7 @@ chrome.runtime.onMessage.addListener(async function (message, sender, sendRespon
     }
 
     if (message.action === 'closeTab') {
-        console.log("快关闭网页!")
+        console.log("快关闭网页！")
         chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
             chrome.tabs.remove(tabs[0].id);
         });
@@ -180,15 +213,3 @@ chrome.runtime.onMessage.addListener(async function (message, sender, sendRespon
     // 这会保持消息通道开放，直到sendResponse被调用
     return true;
 });
-
-//   chrome.runtime.onMessage.addListener(
-//     function(request, sender, sendResponse) {
-//       if (request.action === 'closeTab') {
-//         console.log("快关闭网页")
-//         chrome.tabs.query({ active: true, currentWindow: true }, function(tabs) {
-//           chrome.tabs.remove(tabs[0].id);
-//         });
-//       }
-//     }
-//   );
-

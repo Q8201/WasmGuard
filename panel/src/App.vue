@@ -10,14 +10,12 @@
           </div>
         </div>
         <el-table :data="tableData" border style="width: 100%;background-color:#fff; " height="410">
-          <el-table-column prop="host" label="Domain" width="180">
+          <el-table-column prop="host" label="Url" width="180">
           </el-table-column>
-          <el-table-column prop="filename" label="Filename">
+          <el-table-column prop="originalFilename" label="Filename" width="180">
           </el-table-column>
-          <!-- <el-table-column
-            prop="res"
-            label="检测结果">
-          </el-table-column> -->
+          <el-table-column prop="filename" label="SHA-256">
+          </el-table-column>
           <el-table-column prop="res" label="Results" width="100"
             :filters="[{ text: 'benign', value: 0 }, { text: 'malicious', value: 1 }]" :filter-method="filterTag"
             filter-placement="bottom-end">
@@ -47,12 +45,14 @@ export default {
         {
           host: "http://localhost:8000/test.html",
           filename: "04a5d48f4d815149.wasm",
+          originalFilename: "test.wasm", // 添加原始文件名
           res: 1,
           note: "模型预测1%的概率为良性软件，恶意99%的概率为恶意软件。"
         },
         {
           host: "bilibili",
           filename: "test2.wasm",
+          originalFilename: "test2.wasm", // 添加原始文件名
           res: 0,
           note: "模型预测99%的概率为良性软件恶意1%的概率为恶意软件。"
         },
@@ -66,10 +66,13 @@ export default {
       chrome.runtime.onMessage.addListener(
         (message, sender, sendResponse) => {
           if (message.type === "data_to_show") {
-            console.log(message.data)
+            console.log(message.data);
             // this.showPanel = true;
-            this.tableData = message.data;
-            console.log("data_to_show this.tableData: ", this.tableData)
+            this.tableData = message.data.map(item => ({
+              ...item,
+              originalFilename: item.originalFilename || 'Unknown' // 确保每个项都有 originalFilename
+            }));
+            console.log("data_to_show this.tableData: ", this.tableData);
             //if(this.tableData.length === 0 )
             //this.tableData = this.mock
           }
@@ -86,7 +89,10 @@ export default {
         if (event.data.type === "data_to_show") {
           console.log("Received message from content script:", event.data);
           // this.showPanel = true;
-          this.tableData = event.data.data;
+          this.tableData = event.data.data.map(item => ({
+            ...item,
+            originalFilename: item.originalFilename || 'Unknown' // 确保每个项都有 originalFilename
+          }));
           //if(this.tableData.length === 0 )
           //this.tableData = this.mock
           // 根据event.data进行操作
