@@ -1,37 +1,37 @@
 <template>
   <div id="chromePlugPanelApp" v-show="showPanel">
-      <!-- <div id="chromePlugPanelMask" @click="closePanel()"></div> -->
-      <div id="chromePlugPanel">
-        <div id="chromePlugPanelMain" style="width: 100%; flex: 1; overflow:visible">
-          <div style="height: 3em;" id="chromePlugPanelTitle">
-            <div id="title_left">WasmGuard</div>
-            <div id="title_right">
-              <span id="chromePlugPanelClose" @click="closePanel()">×</span>
-            </div>
+    <!-- <div id="chromePlugPanelMask" @click="closePanel()"></div> -->
+    <div id="chromePlugPanel">
+      <div id="chromePlugPanelMain" style="width: 100%; flex: 1; overflow:visible">
+        <div style="height: 3em;" id="chromePlugPanelTitle">
+          <div id="title_left">WebChecker</div>
+          <div id="title_right">
+            <span id="chromePlugPanelClose" @click="closePanel()">×</span>
           </div>
-          <el-table :data="tableData" border style="width: 100%;background-color:#fff; " height="410">
-            <el-table-column prop="host" label="Domain" width="180">
-            </el-table-column>
-            <el-table-column prop="filename" label="Filename">
-            </el-table-column>
-            <!-- <el-table-column
+        </div>
+        <el-table :data="tableData" border style="width: 100%;background-color:#fff; " height="410">
+          <el-table-column prop="host" label="Domain" width="180">
+          </el-table-column>
+          <el-table-column prop="filename" label="Filename">
+          </el-table-column>
+          <!-- <el-table-column
             prop="res"
             label="检测结果">
           </el-table-column> -->
-            <el-table-column prop="res" label="Results" width="100"
-              :filters="[{ text: 'benign', value: 0 }, { text: 'malicious', value: 1 }]" :filter-method="filterTag"
-              filter-placement="bottom-end">
-              <template slot-scope="scope">
-                <el-tag :type="scope.row.res === 0 ? 'success' : 'danger'" disable-transitions>{{ scope.row.res === 0 ?
-                  "benign" : "malicious" }}</el-tag>
-              </template>
-            </el-table-column>
-            <el-table-column prop="note" label="Note">
-            </el-table-column>
-          </el-table>
-        </div>
+          <el-table-column prop="res" label="Results" width="100"
+            :filters="[{ text: 'benign', value: 0 }, { text: 'malicious', value: 1 }]" :filter-method="filterTag"
+            filter-placement="bottom-end">
+            <template slot-scope="scope">
+              <el-tag :type="scope.row.res === 0 ? 'success' : 'danger'" disable-transitions>{{ scope.row.res === 0 ?
+                "benign" : "malicious" }}</el-tag>
+            </template>
+          </el-table-column>
+          <el-table-column prop="note" label="Note">
+          </el-table-column>
+        </el-table>
       </div>
     </div>
+  </div>
 </template>
 <script>
 // import tabBar from "./components/common/tabBar.vue";
@@ -51,10 +51,10 @@ export default {
           note: "模型预测1%的概率为良性软件，恶意99%的概率为恶意软件。"
         },
         {
-          host:"bilibili",
-          filename:"test2.wasm",
-          res:0,
-          note:"模型预测99%的概率为良性软件恶意1%的概率为恶意软件。"
+          host: "bilibili",
+          filename: "test2.wasm",
+          res: 0,
+          note: "模型预测99%的概率为良性软件恶意1%的概率为恶意软件。"
         },
       ],
       // showPanel: true,
@@ -97,7 +97,6 @@ export default {
       });
     }
   },
-  
   mounted() {
     console.log("hello from vue plug page")
     // if (chrome && chrome?.runtime && chrome?.runtime?.sendMessage) {
@@ -105,8 +104,8 @@ export default {
     //     type: "vue_page_mounted"
     //   })
     // } else {
-      //console.log("用原生window方法发送信息")
-      window.postMessage({ type: "vue_page_mounted" }, "*");
+    //console.log("用原生window方法发送信息")
+    window.postMessage({ type: "vue_page_mounted" }, "*");
     // }
 
     const keydownFn = (event) => {
@@ -120,22 +119,22 @@ export default {
     chromePlugPanel && chromePlugPanel.addEventListener("keydown", keydownFn);
     chromePlugPanelMask &&
       chromePlugPanelMask.addEventListener("keydown", keydownFn);
-    if (this.tableData.length > 0) {  
-      this.checkMaliciousFiles();  
-    } 
+    if (this.tableData.length > 0) {
+      this.checkMaliciousFiles();
+    }
   },
-  watch: {  
+  watch: {
     // 侦听tableData的变化  
-    tableData: {  
-      handler(newVal, oldVal) {  
+    tableData: {
+      handler(newVal, oldVal) {
         // 当tableData变化时，调用checkMaliciousFiles方法  
         if (newVal.length > 0) { // 只在有内容时调用  
-          this.checkMaliciousFiles();  
-        }  
-      },  
+          this.checkMaliciousFiles();
+        }
+      },
       deep: true, // 如果tableData是一个对象或数组，并且你需要深度监听其内部属性的变化，可以设置为true  
       immediate: false // 如果需要在组件初始化时立即调用一次handler，可以设置为true  
-    },  
+    },
   },
   methods: {
     closePanel() {
@@ -156,9 +155,9 @@ export default {
     },
     checkMaliciousFiles() {
       let isMalicious = this.tableData.some(item => {
-        return item.res === 1 && item.host === window.location.host; 
+        return item.res === 1 && item.host === window.location.host;
       })
-      if(isMalicious) {
+      if (isMalicious) {
         this.showPanel = true
         this.$message({
           showClose: true,
@@ -172,7 +171,6 @@ export default {
 </script>
 
 <style scoped>
-
 #chromePlugPanelMask {
   position: fixed;
   background: #b6bdc4;
@@ -227,7 +225,8 @@ export default {
 #chromePlugPanelTitle {
   display: flex;
   /*justify-content: center;/* 水平居中 */
-  align-items: center;/* 垂直居中 */
+  align-items: center;
+  /* 垂直居中 */
   background-color: #5551ff;
   color: #fff;
   font-size: 20px;

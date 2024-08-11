@@ -2,7 +2,7 @@
   <div id="popup">
     <img alt="Vue logo" src="./assets/logo.png" class="logo" />
     <div class="hello">
-      <p>Welcome to the <span class="important">WasmGuard</span> tool. Use the <span class="important">alt+V</span> shortcut key to control the visibility of the popup.</p>
+      <p>Welcome to the <span class="important">WasmGuard</span> tool <span class="important">WebChecker</span>. Use the <span class="important">alt+V</span> shortcut key to control the visibility of the popup.</p>
     </div>
   </div>
 </template>

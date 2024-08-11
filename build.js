@@ -93,7 +93,7 @@ async function npmInstall(options) {
   const cwdKey = options.cwd.replace(dir, "");
   const cwd = path.join(options.cwd, "node_modules");
   if (!fs.existsSync(cwd) || checkDependenciesChange(options)) {
-    console.log(`正在更新依赖，请稍等……`);
+    console.log(`Updating dependencies, please wait...`);
     child_process.execSync("npm install", options);
   }
 }
@@ -103,14 +103,14 @@ async function npmBuild(options) {
   const cwdKey = cwd.replace(dir, "");
   const hashCode = hashFolder(cwd);
   if (hashCode === HASH[cwdKey]) {
-    console.log(`${cwdKey}无更新`);
+    console.log(`${cwdKey}No updates`);
     return;
   }
   HASH[cwdKey] = hashCode;
   buildConfig.HASH = HASH;
   const jsonData = JSON.stringify(buildConfig, null, 2);
   fs.writeFileSync("./buildConfig.json", jsonData, { encoding: "utf8" });
-  console.log(`正在打包${cwdKey}`);
+  console.log(`Packing ${cwdKey}`);
   child_process.execSync("npm run build", options);
 }
 async function buildPopup() {
@@ -227,12 +227,12 @@ async function run() {
   await buildPopup();
   await buildPanel();
   await reNameCss();
-  console.log(`正在生成manifest配置文件，请稍等……`);
+  console.log(`Generating manifest file, please wait...`);
   await editManifest();
   await editContentScript();
-  console.log(`正在生成dist包，请稍等……`);
+  console.log(`Generating dist package, please wait...`);
   await createDist();
-  console.log(`打包完成`);
+  console.log(`Packaging completed`);
 }
 // 监听文件夹的哈希值变化
 function watchFolder(folderPath = "./") {
