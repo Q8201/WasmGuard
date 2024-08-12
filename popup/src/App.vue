@@ -2,7 +2,8 @@
   <div id="popup">
     <img alt="Vue logo" src="./assets/logo.png" class="logo" />
     <div class="hello">
-      <p>Welcome to the <span class="important">WasmGuard</span> tool <span class="important">WebChecker</span>. Use the <span class="important">alt+V</span> shortcut key to control the visibility of the popup.</p>
+      <p>Welcome to <span class="important">WebChecker</span>! Press <span class="important">Alt+V</span> to toggle the
+        visibility of the popup window.</p>
     </div>
   </div>
 </template>
@@ -15,7 +16,7 @@ export default {
   components: {
     HelloWorld,
   },
-  data(){
+  data() {
     return {
       tableData: [],
     }
@@ -32,13 +33,16 @@ export default {
   color: #2c3e50;
   margin-top: 10px;
 }
+
 .logo {
   width: 60px;
 }
+
 .hello {
   display: flex;
   justify-content: center;
 }
+
 .hello p {
   width: 250px;
   font-weight: 500;
@@ -46,6 +50,7 @@ export default {
   text-align: center;
   margin: 0;
 }
+
 .important {
   font-weight: 700;
 }
